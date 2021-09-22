@@ -57,11 +57,10 @@ public class CelebrationCrudServlet extends HttpServlet {
                     default:
                         path = "celebrationDetails.jsp";
                         break;
-                }
-                
-                request.getRequestDispatcher(StringConst.CELEBRATION_INDEX_PATH + path).forward(request, response);
-                    
+                }          
             }
+                            
+            request.getRequestDispatcher(StringConst.CELEBRATION_INDEX_PATH + path).forward(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
             request.setAttribute("msg", ex);
             request.getRequestDispatcher(StringConst.ERROR_PAGE).forward(request, response);
@@ -81,7 +80,7 @@ public class CelebrationCrudServlet extends HttpServlet {
             
             switch(action){
                 case "Add":
-                    parameters = ServletRequestHelper.getParameters(request, "name","description","price");
+                    parameters = ServletRequestHelper.getParameters(request, "naziv","opis","cena");
                     AddCelebration(new ArrayList<>(parameters.values()), con);
                     request.setAttribute("msg", "Uspesno dodavanje proslave");
                     break;
@@ -91,7 +90,7 @@ public class CelebrationCrudServlet extends HttpServlet {
                     request.setAttribute("msg", "Uspesno ste obrisali proslavu");
                     break;
                 case "Update":
-                    parameters = ServletRequestHelper.getParameters(request, "id","name","description","price","agencyId");
+                    parameters = ServletRequestHelper.getParameters(request, "id","naziv","opis","cena","agencijaId");
                     UpdateCelebration(parameters,con);
                     request.setAttribute("msg", "Uspesno azurirana proslava");
                     break;
