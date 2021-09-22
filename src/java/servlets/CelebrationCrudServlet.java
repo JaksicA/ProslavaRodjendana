@@ -60,7 +60,7 @@ public class CelebrationCrudServlet extends HttpServlet {
                 }          
             }
                             
-            request.getRequestDispatcher(StringConst.CELEBRATION_INDEX_PATH + path).forward(request, response);
+            request.getRequestDispatcher(StringConst.CELEBRATION_BASE_PATH + path).forward(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
             request.setAttribute("msg", ex);
             request.getRequestDispatcher(StringConst.ERROR_PAGE).forward(request, response);
@@ -163,7 +163,7 @@ public class CelebrationCrudServlet extends HttpServlet {
             return;
         }
 
-        String query = "UPDATE proslava SET Naziv = ?, Opis = ?, Cena = ? WHERE id = ? && AgencijaId = ?";
+        String query = "UPDATE proslava SET Naziv = ?, Opis = ?, Cena = ? WHERE id = ? AND AgencijaId = ?";
         PreparedStatement pstm = con.prepareStatement(query);
 
         pstm.setString(1, parameters.get("name"));
