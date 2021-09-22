@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import beans.Agency;
+import beans.Addition;
 import db.ConnectionHelpers;
 import java.io.IOException;
 import java.sql.Connection;
@@ -24,16 +24,16 @@ import utility.StringConst;
  *
  * @author Lenovo
  */
-public class AgencyServlet extends HttpServlet {
+public class AdditionServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+ protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try { 
             Connection con = ConnectionHelpers.GetConnection();
-            List<Agency> agencies = GetAgencies(con);
+            List<Addition> additions = GetAdditions(con);
 
-            request.setAttribute("agencies", agencies);
-            request.getRequestDispatcher(StringConst.AGENCY_INDEX_PATH).forward(request, response);
+            request.setAttribute("additions", additions);
+            request.getRequestDispatcher(StringConst.ADDITION_INDEX_PATH).forward(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
             request.setAttribute("msg", ex);
             request.getRequestDispatcher(StringConst.ERROR_PAGE).forward(request, response);
@@ -52,18 +52,18 @@ public class AgencyServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    private List<Agency> GetAgencies(Connection con) throws SQLException {
-        List<Agency> agencies = new ArrayList<>();
+    private List<Addition> GetAdditions(Connection con) throws SQLException {
+        List<Addition> additions = new ArrayList<>();
 
-        String query = "SELECT * FROM agencija";
+        String query = "SELECT * FROM dodatak";
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(query);
 
         while (rs.next()) {
-            Agency agency = new Agency(rs.getInt(StringConst.ID), rs.getString(StringConst.NAME), rs.getString(StringConst.IMAGE), rs.getString(StringConst.DESCRIPTION), rs.getString(StringConst.LOCATION));
-            agencies.add(agency);
+            Addition addition = new Addition(rs.getInt(StringConst.ID), rs.getString(StringConst.NAME), rs.getInt(StringConst.PRICE));
+            additions.add(addition);
         }
-        return agencies;
+        return additions;
     }
 
 }

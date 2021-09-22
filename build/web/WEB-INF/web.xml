@@ -28,6 +28,14 @@
         <servlet-name>CelebrationCrudServlet</servlet-name>
         <servlet-class>servlets.CelebrationCrudServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdditionServlet</servlet-name>
+        <servlet-class>servlets.AdditionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdditionCrudServlet</servlet-name>
+        <servlet-class>servlets.AdditionCrudServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>CelebrationCrudServlet</servlet-name>
         <url-pattern>/CelebrationCrudServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdditionServlet</servlet-name>
+        <url-pattern>/AdditionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdditionCrudServlet</servlet-name>
+        <url-pattern>/AdditionCrudServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
