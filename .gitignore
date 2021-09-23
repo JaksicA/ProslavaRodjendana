@@ -1,6 +1,8 @@
 # Compiled class file
 *.class
-
+C:\Users\Lenovo\source\repos\AgencijaZaRodjendane\build\web\WEB-INF\classes\servlets\AgencyServlet.class
+C:\Users\Lenovo\source\repos\AgencijaZaRodjendane\build\web\WEB-INF\classes\utility\StringConst.class
+C:\Users\Lenovo\source\repos\AgencijaZaRodjendane\build\web\WEB-INF\classes\servlets\CelebrationCrudServlet.class
 # Log file
 *.log
 
