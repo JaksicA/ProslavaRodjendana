@@ -16,9 +16,10 @@
         
         <%
             List<Celebration> celebrations = (List<Celebration>) request.getAttribute("celebrations");
+            String agencyId = (String)request.getAttribute("agencyId");
         %>
         
-        <a class="btn btn-primary" href="CelebrationCrudServlet?action=Add">Dodaj proslavu</a>
+        <a class="btn btn-primary" href="CelebrationCrudServlet?agencyId=<%=agencyId%>&action=Add">Dodaj proslavu</a>
         <div class="container">
             <div class="row">
                 <% for (Celebration celebration : celebrations) {%>
