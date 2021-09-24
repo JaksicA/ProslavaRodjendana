@@ -18,6 +18,8 @@
         %>
 
         <a class="btn btn-primary" href="AgencyCrudServlet?action=Add">Dodaj agenciju</a>
+        
+
         <div class="container">
             <div class="row">
                 <% for (Agency agency : agencies) {%>
@@ -32,6 +34,7 @@
                         </div>
                         <a class="btn btn-danger" href="AgencyCrudServlet?id=<%=agency.getId()%>&action=Remove">Obrisi</a>
                         <a class="btn btn-primary" href="AgencyCrudServlet?id=<%= agency.getId()%>&action=Update">Izmeni</a>
+                        <a class="btn btn-success" href="CelebrationServlet?agencyId=<%=agency.getId()%>">Proslave</a>
                     </div>
                     <input type="hidden" value="<%= agency.getId()%>" />
                 </div>

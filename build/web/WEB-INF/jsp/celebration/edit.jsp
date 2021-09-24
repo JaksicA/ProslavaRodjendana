@@ -4,14 +4,28 @@
     Author     : Lenovo
 --%>
 
+<%@page import="utility.StringConst"%>
+<%@page import="beans.Celebration"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
+    <jsp:include page="../header.jsp"/>
     <body>
-        <h1>Hello World   !</h1>
+        <jsp:include page="../navbar.jsp"/>
+        <%
+            Celebration celebration = (Celebration) request.getAttribute("celebration");
+        %>
+        <form action="CelebrationCrudServlet" method="POST">
+            <input name="<%=StringConst.NAME%>" id="<%=StringConst.NAME%>" value="<%=celebration.getName()%>"/>
+            <input name="<%=StringConst.DESCRIPTION%>" id="<%=StringConst.DESCRIPTION%>" value="<%=celebration.getDescription()%>"/>
+            <input name="<%=StringConst.PRICE%>" id="<%=StringConst.PRICE%>" value="<%=celebration.getPrice()%>"/>
+
+
+            <input type="hidden" name="<%=StringConst.ID%>" value="<%=celebration.getId()%>"/>
+            <input type="hidden" name="<%="agencijaId"%>" value="<%=celebration.getAgencyId()%>"/>
+            <input type="hidden" name="<%=StringConst.ACTION_PARAMETER%>" value="Update"/>
+            <input type="submit" value="Potvrdi" class="btn btn-primary"/>
+        </form>
+        <jsp:include page="../scripts.jsp"/>
     </body>
 </html>

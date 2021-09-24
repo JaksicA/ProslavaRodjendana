@@ -36,6 +36,14 @@
         <servlet-name>AdditionCrudServlet</servlet-name>
         <servlet-class>servlets.AdditionCrudServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>servlets.UserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserCrudServlet</servlet-name>
+        <servlet-class>servlets.UserCrudServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -63,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>AdditionCrudServlet</servlet-name>
         <url-pattern>/AdditionCrudServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserCrudServlet</servlet-name>
+        <url-pattern>/UserCrudServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

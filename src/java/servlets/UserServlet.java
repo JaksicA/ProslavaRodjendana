@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import beans.Addition;
+import beans.User;
 import db.ConnectionHelpers;
 import java.io.IOException;
 import java.sql.Connection;
@@ -24,16 +24,18 @@ import utility.StringConst;
  *
  * @author Lenovo
  */
-public class AdditionServlet extends HttpServlet {
+public class UserServlet extends HttpServlet {
 
- protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         try { 
             Connection con = ConnectionHelpers.GetConnection();
-            List<Addition> additions = GetAdditions(con);
+            List<User> users = GetUsers(con);
 
-            request.setAttribute("additions", additions);
-            request.getRequestDispatcher(StringConst.ADDITION_INDEX_PATH).forward(request, response);
+            request.setAttribute("users", users);
+            request.getRequestDispatcher(StringConst.USER_INDEX_PATH).forward(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
             request.setAttribute("poruka", ex);
             request.getRequestDispatcher(StringConst.ERROR_PAGE).forward(request, response);
@@ -52,18 +54,17 @@ public class AdditionServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    private List<Addition> GetAdditions(Connection con) throws SQLException {
-        List<Addition> additions = new ArrayList<>();
+    private List<User> GetUsers(Connection con) throws SQLException {
+        List<User> users = new ArrayList<>();
 
-        String query = "SELECT * FROM dodatak";
+        String query = "SELECT * FROM korisnik";
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(query);
 
         while (rs.next()) {
-            Addition addition = new Addition(rs.getInt(StringConst.ID), rs.getString(StringConst.NAME), rs.getInt(StringConst.PRICE));
-            additions.add(addition);
+            User user = new User(rs.getInt("id"), rs.getString("ime"), rs.getString("prezime"), rs.getString("email"), rs.getString("passwordHash"), rs.getString("salt"),rs.getInt("ovlascenjeId"));
+            users.add(user);
         }
-        return additions;
+        return users;
     }
-
 }
