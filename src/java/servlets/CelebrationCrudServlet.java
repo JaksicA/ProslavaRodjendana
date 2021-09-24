@@ -12,9 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +35,9 @@ public class CelebrationCrudServlet extends HttpServlet {
             String path;
             String action = request.getParameter(StringConst.ACTION_PARAMETER);
             
-            if(action.equals("Add")){
+            if(action.equals("Add")){                
+                String agencyId = request.getParameter("agencyId");
+                request.setAttribute("agencyId", agencyId);
                 path = "add.jsp";
             }
             else {
@@ -62,7 +62,7 @@ public class CelebrationCrudServlet extends HttpServlet {
                             
             request.getRequestDispatcher(StringConst.CELEBRATION_BASE_PATH + path).forward(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
-            request.setAttribute("msg", ex);
+            request.setAttribute("poruka", ex);
             request.getRequestDispatcher(StringConst.ERROR_PAGE).forward(request, response);
         }
     }
@@ -80,14 +80,15 @@ public class CelebrationCrudServlet extends HttpServlet {
             
             switch(action){
                 case "Add":
-                    parameters = ServletRequestHelper.getParameters(request, "naziv","opis","cena");
-                    AddCelebration(new ArrayList<>(parameters.values()), con);
+                    parameters = ServletRequestHelper.getParameters(request, "agencyId","naziv","opis","cena");
+                    AddCelebration(parameters, con);
                     request.setAttribute("msg", "Uspesno dodavanje proslave");
                     break;
                 case "Remove":
-                    parameters = ServletRequestHelper.getParameters(request, "id");
-                    RemoveCelebration(parameters.get("Id"), con);  
+                    parameters = ServletRequestHelper.getParameters(request, "id", "agencijaId");
+                    RemoveCelebration(parameters.get("id"), con);  
                     request.setAttribute("msg", "Uspesno ste obrisali proslavu");
+                    request.setAttribute("agencyId", parameters.get("agencijaId"));
                     break;
                 case "Update":
                     parameters = ServletRequestHelper.getParameters(request, "id","naziv","opis","cena","agencijaId");
@@ -120,25 +121,23 @@ public class CelebrationCrudServlet extends HttpServlet {
         
         if(rs.next()){
             celebration.setId(rs.getInt("id"));
-            celebration.setName(rs.getString("name"));
-            celebration.setDescription(rs.getString("description"));
-            celebration.setPrice(rs.getInt("price"));
-            celebration.setAgencyId(rs.getInt("agencyId"));
+            celebration.setName(rs.getString("naziv"));
+            celebration.setDescription(rs.getString("opis"));
+            celebration.setPrice(rs.getInt("cena"));
+            celebration.setAgencyId(rs.getInt("agencijaId"));
         }
         return celebration;
     }
-    private void AddCelebration(List<String> parameters , Connection con) throws SQLException{
-        for (String parameter : parameters) {
-            if (parameter.equals("") || parameter.length() == 0) {
-                return;
-            }
-        }
-        String query = "INSERT INTO proslava (Naziv, Opis, Cena) VALUES (?,?,?)";
+    private void AddCelebration(HashMap<String, String> parameters , Connection con) throws SQLException{
+        if(parameters.containsValue("")) return;
+        
+        String query = "INSERT INTO proslava (Naziv, Opis, Cena, AgencijaId) VALUES (?,?,?,?)";
         PreparedStatement pstm = con.prepareStatement(query);
-
-        for (int i = 0; i < parameters.size(); i++) {
-            pstm.setString(i + 1, parameters.get(i));
-        }
+        
+        pstm.setString(1, parameters.get("naziv"));
+        pstm.setString(2, "opis");
+        pstm.setInt(3, Integer.parseInt(parameters.get("cena")));
+        pstm.setInt(4, Integer.parseInt(parameters.get("agencyId")));
 
         pstm.executeUpdate();
         pstm.close();
@@ -166,11 +165,11 @@ public class CelebrationCrudServlet extends HttpServlet {
         String query = "UPDATE proslava SET Naziv = ?, Opis = ?, Cena = ? WHERE id = ? AND AgencijaId = ?";
         PreparedStatement pstm = con.prepareStatement(query);
 
-        pstm.setString(1, parameters.get("name"));
-        pstm.setString(2, parameters.get("description"));
-        pstm.setString(3, parameters.get("price"));
+        pstm.setString(1, parameters.get("naziv"));
+        pstm.setString(2, parameters.get("opis"));
+        pstm.setString(3, parameters.get("cena"));
         pstm.setInt(4, Integer.parseInt(parameters.get("id")));
-        pstm.setInt(5, Integer.parseInt(parameters.get("agencyId")));
+        pstm.setInt(5, Integer.parseInt(parameters.get("agencijaId")));
 
         pstm.executeUpdate();
         pstm.close();

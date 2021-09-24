@@ -35,7 +35,7 @@ public class AgencyServlet extends HttpServlet {
             request.setAttribute("agencies", agencies);
             request.getRequestDispatcher(StringConst.AGENCY_INDEX_PATH).forward(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
-            request.setAttribute("msg", ex);
+            request.setAttribute("poruka", ex);
             request.getRequestDispatcher(StringConst.ERROR_PAGE).forward(request, response);
         }
     }

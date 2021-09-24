@@ -36,7 +36,7 @@
 
         <form action="CelebrationCrudServlet" method="POST">
             <input type="hidden" name="<%=StringConst.ID%>" value="<%=celebration.getId()%>"/>
-            <input type="hidden" name="<%="AgencijaId"%>" value="<%=celebration.getAgencyId()%>"/>
+            <input type="hidden" name="<%="agencijaId"%>" value="<%=celebration.getAgencyId()%>"/>
             <input type="hidden" name="<%=StringConst.ACTION_PARAMETER%>" value="Remove"/>
             <input type="submit" value="Potvrdi" class="btn btn-danger"/>
         </form>

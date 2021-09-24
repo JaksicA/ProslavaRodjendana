@@ -23,9 +23,12 @@ C:\Users\Lenovo\source\repos\AgencijaZaRodjendane\build\web\WEB-INF\classes\serv
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+<<<<<<< HEAD
+=======
 /build/web/WEB-INF/classes/servlets/AgencyServlet.class
 /build/web/WEB-INF/classes/servlets/CelebrationCrudServlet.class
 /build/web/WEB-INF/classes/utility/StringConst.class
+>>>>>>> 1bb6ba3a20b41088cf294829c5b52b14d514fd3f
 /build/web/WEB-INF/classes/servlets/AgencyServlet.class~Stashed changes
 /build/web/WEB-INF/classes/servlets/AgencyServlet.class~Stashed changes_0
 /build/web/WEB-INF/classes/servlets/AgencyServlet.class~Stashed changes_1

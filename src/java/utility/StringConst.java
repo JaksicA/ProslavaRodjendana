@@ -25,5 +25,11 @@ public class StringConst {
     public static final String CELEBRATION_BASE_PATH = "WEB-INF/jsp/celebration/";
     public static final String ADDITION_INDEX_PATH = "WEB-INF/jsp/addition/index.jsp";
     public static final String ADDITION_BASE_PATH = "WEB-INF/jsp/addition/";
-
+    public static final String USER_INDEX_PATH = "WEB-INF/jsp/user/index.jsp" ;
+    public static final String USER_BASE_PATH = "WEB-INF/jsp/user/" ;
+    public static final String USER_NAME = "ime";
+    public static final String USER_LAST_NAME = "prezime";
+    public static final String EMAIL ="email";
+    public static final String PASSWORD = "password";
+    public static final int ROLE_ID = 2;
 }
