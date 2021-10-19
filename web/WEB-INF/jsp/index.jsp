@@ -9,7 +9,7 @@
         <jsp:include page="navbar.jsp"/>
 
         <p><a href="AgencyServlet">asdasfsga</a>Hello! This is the default welcome page for a Spring Web MVC project.</p>
-        <p><a href="CelebrationServlet">asdasaaaaaaafsga</a>
+        <p><a href="CelebrationCrudServlet">asdasaaaaaaafsga</a>
                     <p><a href="AdditionServlet">asdabbbbbbaaafsga</a>
 
         <p><i>To display a different welcome page for this project, modify</i>

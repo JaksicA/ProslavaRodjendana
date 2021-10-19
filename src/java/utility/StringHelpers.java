@@ -5,6 +5,11 @@
  */
 package utility;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author Lenovo
@@ -22,5 +27,10 @@ public class StringHelpers {
         }catch(NumberFormatException nfe){
             return false;
         }
+    }
+    
+    public static Timestamp GetDateTimeFromString(String dateString) throws ParseException{
+        Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(dateString.replace("T", " ").concat(":00"));
+        return new Timestamp(date.getTime());
     }
 }

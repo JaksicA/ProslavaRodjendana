@@ -6,15 +6,13 @@
 package servlets;
 
 import beans.Agency;
+import db.AgencyCrud;
 import db.ConnectionHelpers;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +22,14 @@ import utility.StringConst;
 
 public class AgencyCrudServlet extends HttpServlet {
 
+        @Inject
+         AgencyCrud crud;
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        
         try {
             String path;
             String action = request.getParameter(StringConst.ACTION_PARAMETER);
@@ -39,7 +41,7 @@ public class AgencyCrudServlet extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter(StringConst.ID));
 
                 Connection con = ConnectionHelpers.GetConnection();
-                Agency agency = GetAgencyById(id, con);
+                Agency agency = crud.GetById(id, con);
                 request.setAttribute("agency", agency);
 
                 switch (action) {
@@ -77,17 +79,17 @@ public class AgencyCrudServlet extends HttpServlet {
             switch (action) {
                 case "Add":
                     parameters = ServletRequestHelper.getParameters(request, StringConst.NAME, StringConst.IMAGE, StringConst.DESCRIPTION, StringConst.LOCATION);
-                    AddAgency(new ArrayList<>(parameters.values()), con);
+                    crud.Add(parameters, con);
                     request.setAttribute("msg", "Uspesno ste kreirali agenciju");
                     break;
                 case "Remove":
                     parameters = ServletRequestHelper.getParameters(request, StringConst.ID);
-                    RemoveAgency(parameters.get(StringConst.ID), con);
+                    crud.Remove(parameters.get(StringConst.ID), con);
                     request.setAttribute("msg", "Uspesno ste obrisali agenciju");
                     break;
                 case "Update":
                     parameters = ServletRequestHelper.getParameters(request, StringConst.ID, StringConst.NAME, StringConst.IMAGE, StringConst.DESCRIPTION, StringConst.LOCATION);
-                    UpdateAgency(parameters, con);
+                    crud.Update(parameters, con);
                     request.setAttribute("msg", "Uspesno ste izmenili agenicju");
                     break;
                 default:
@@ -106,75 +108,4 @@ public class AgencyCrudServlet extends HttpServlet {
         }
 
     }
-
-    private void AddAgency(List<String> parameters, Connection con) throws SQLException {
-        for (String parameter : parameters) {
-            if (parameter.equals("") || parameter.length() == 0) {
-                return;
-            }
-        }
-        String query = "INSERT INTO agencija (Naziv, Slika, Opis, Lokacija) VALUES (?,?,?,?)";
-        PreparedStatement pstm = con.prepareStatement(query);
-
-        for (int i = 0; i < parameters.size(); i++) {
-            pstm.setString(i + 1, parameters.get(i));
-        }
-
-        pstm.executeUpdate();
-        pstm.close();
-    }
-
-    private void RemoveAgency(String id, Connection con) throws SQLException {
-        if (id.equals("")) {
-            return;
-        }
-
-        String query = "DELETE FROM agencija WHERE id = ?";
-        PreparedStatement pstm = con.prepareStatement(query);
-
-        pstm.setInt(1, Integer.parseInt(id));
-        pstm.executeUpdate();
-
-        pstm.close();
-    }
-
-    private void UpdateAgency(HashMap<String, String> parameters, Connection con) throws SQLException {
-
-        if (parameters.containsValue("")) {
-            return;
-        }
-
-        String query = "UPDATE agencija SET naziv = ?, opis = ?, slika = ?, lokacija = ? WHERE id = ?";
-        PreparedStatement pstm = con.prepareStatement(query);
-
-        pstm.setString(1, parameters.get(StringConst.NAME));
-        pstm.setString(2, parameters.get(StringConst.DESCRIPTION));
-        pstm.setString(3, parameters.get(StringConst.IMAGE));
-        pstm.setString(4, parameters.get(StringConst.LOCATION));
-        pstm.setInt(5, Integer.parseInt(parameters.get(StringConst.ID)));
-
-        pstm.executeUpdate();
-        pstm.close();
-    }
-
-    private Agency GetAgencyById(int id, Connection con) throws SQLException {
-        Agency agency = new Agency();
-
-        String query = "SELECT * FROM agencija WHERE id = ?";
-        PreparedStatement pstm = con.prepareStatement(query);
-        pstm.setInt(1, id);
-
-        ResultSet rs = pstm.executeQuery();
-
-        if (rs.next()) {
-            agency.setId(rs.getInt(StringConst.ID));
-            agency.setDescription(rs.getString(StringConst.DESCRIPTION));
-            agency.setImage(rs.getString(StringConst.IMAGE));
-            agency.setLocation(rs.getString(StringConst.LOCATION));
-            agency.setName(rs.getString(StringConst.NAME));
-        }
-
-        return agency;
-    }
-
 }

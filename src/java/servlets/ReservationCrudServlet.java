@@ -1,8 +1,9 @@
 package servlets;
 
-import beans.Celebration;
-import db.CelebrationCrud;
+import beans.Reservation;
+import beans.User;
 import db.ConnectionHelpers;
+import db.ReservationCrud;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,31 +20,32 @@ import utility.StringConst;
  *
  * @author Lenovo
  */
-public class CelebrationCrudServlet extends HttpServlet {
+public class ReservationCrudServlet extends HttpServlet {
 
     @Inject
-    CelebrationCrud crud;
+      ReservationCrud crud;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         try {
             String path;
             String action = request.getParameter(StringConst.ACTION_PARAMETER);
-
-            if (action.equals("Add")) {
-                String agencyId = request.getParameter("agencyId");
-                request.setAttribute("agencyId", agencyId);
+            
+            if(action.equals("Add")){                
+                String celebrationId = request.getParameter("celebrationId");
+                request.setAttribute("celebrationId", celebrationId);
                 path = "add.jsp";
-            } else {
+            }
+            else {
                 int id = Integer.parseInt(request.getParameter("id"));
-
+                
                 Connection con = ConnectionHelpers.GetConnection();
-                Celebration celebration = crud.GetById(id, con);
-                request.setAttribute("celebration", celebration);
-
-                switch (action) {
+                Reservation reservation = crud.GetById(id,con);
+                request.setAttribute("reservation", reservation);
+                
+                switch (action){
                     case "Update":
                         path = "edit.jsp";
                         break;
@@ -51,12 +53,12 @@ public class CelebrationCrudServlet extends HttpServlet {
                         path = "remove.jsp";
                         break;
                     default:
-                        path = "celebrationDetails.jsp";
+                        path = "reservationDetails.jsp";
                         break;
-                }
+                }          
             }
-
-            request.getRequestDispatcher(StringConst.CELEBRATION_BASE_PATH + path).forward(request, response);
+                            
+            request.getRequestDispatcher(StringConst.RESERVATION_BASE_PATH + path).forward(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
             request.setAttribute("poruka", ex);
             request.getRequestDispatcher(StringConst.ERROR_PAGE).forward(request, response);
@@ -67,36 +69,39 @@ public class CelebrationCrudServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter(StringConst.ACTION_PARAMETER);
-        HashMap<String, String> parameters;
-
-        try {
+        HashMap<String , String> parameters;
+        
+        try{
             Connection con = ConnectionHelpers.GetConnection();
-
-            switch (action) {
+            
+            switch(action){
                 case "Add":
-                    parameters = ServletRequestHelper.getParameters(request, "agencyId", "naziv", "opis", "cena");
+                    User user = (User)request.getSession().getAttribute("user");
+                    parameters = ServletRequestHelper.getParameters(request, "start","end","celebrationId");
+                    parameters.put("userId", Integer.toString(user.getId()));
                     crud.Add(parameters, con);
                     request.setAttribute("msg", "Uspesno dodavanje proslave");
                     break;
                 case "Remove":
-                    parameters = ServletRequestHelper.getParameters(request, "id", "agencijaId");
-                    crud.Remove(parameters.get("id"), con);
-                    request.setAttribute("msg", "Uspesno ste obrisali proslavu");
-                    request.setAttribute("agencyId", parameters.get("agencijaId"));
+                    parameters = ServletRequestHelper.getParameters(request, "id", "celebraionId","userId");
+                    crud.Remove(parameters.get("id"), con);  
+                    request.setAttribute("msg", "Uspesno ste obrisali rezervaciju");
+                    request.setAttribute("celebrationId", parameters.get("celebrationId"));
                     break;
                 case "Update":
-                    parameters = ServletRequestHelper.getParameters(request, "id", "naziv", "opis", "cena", "agencijaId");
-                    crud.Update(parameters, con);
-                    request.setAttribute("msg", "Uspesno azurirana proslava");
-                    request.setAttribute("agencyId", parameters.get("agencijaId"));
+                    parameters = ServletRequestHelper.getParameters(request, "id","start","end","celebrationId","userId");
+                    crud.Update(parameters,con);
+                    request.setAttribute("msg", "Uspesno azurirana rezervacija");
                     break;
                 default:
                     break;
             }
-
+            
             con.close();
-            request.getRequestDispatcher("CelebrationServlet").forward(request, response);
-
+            request.getRequestDispatcher("ReservationServlet").forward(request, response);
+            
+            
+            
         } catch (SQLException | ClassNotFoundException ex) {
             request.setAttribute("poruka", ex);
             request.getRequestDispatcher(StringConst.ERROR_PAGE).forward(request, response);

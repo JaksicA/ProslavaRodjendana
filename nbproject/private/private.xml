@@ -3,23 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/servlets/AgencyServlet.java</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/web/WEB-INF/jsp/celebration/index.jsp</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/beans/User.java</file>
+            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/db/IBeanCrud.java</file>
             <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/servlets/AgencyCrudServlet.java</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/web/WEB-INF/jsp/user/index.jsp</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/servlets/CelebrationServlet.java</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/web/WEB-INF/jsp/user/add.jsp</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/web/WEB-INF/jsp/celebration/add.jsp</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/web/WEB-INF/jsp/addition/add.jsp</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/web/WEB-INF/jsp/agency/index.jsp</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/servlets/UserServlet.java</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/utility/PasswordHasher.java</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/utility/ServletRequestHelper.java</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/servlets/CelebrationCrudServlet.java</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/web/WEB-INF/jsp/celebration/remove.jsp</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/utility/StringConst.java</file>
-            <file>file:/C:/Users/Lenovo/source/repos/AgencijaZaRodjendane/src/java/servlets/UserCrudServlet.java</file>
         </group>
     </open-files>
 </project-private>

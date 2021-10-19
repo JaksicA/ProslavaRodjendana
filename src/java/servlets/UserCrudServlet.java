@@ -7,25 +7,16 @@ package servlets;
 
 import beans.User;
 import db.ConnectionHelpers;
+import db.UserCrud;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utility.PasswordHasher;
 import utility.ServletRequestHelper;
 import utility.StringConst;
 
@@ -35,6 +26,9 @@ import utility.StringConst;
  */
 public class UserCrudServlet extends HttpServlet {
 
+    @Inject
+      UserCrud crud;
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,7 +43,7 @@ public class UserCrudServlet extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter(StringConst.ID));
 
                 Connection con = ConnectionHelpers.GetConnection();
-                User user = GetUserById(id, con);
+                User user = crud.GetById(id, con);
                 request.setAttribute("user", user);
 
                 switch (action) {
@@ -87,17 +81,17 @@ public class UserCrudServlet extends HttpServlet {
             switch (action) {
                 case "Add":
                     parameters = ServletRequestHelper.getParameters(request, StringConst.USER_NAME, StringConst.USER_LAST_NAME, StringConst.EMAIL, StringConst.PASSWORD);
-                    AddUser(parameters, con);
+                    crud.Add(parameters, con);
                     request.setAttribute("msg", "Uspesno ste kreirali korisnika");
                     break;
                 case "Remove":
                     parameters = ServletRequestHelper.getParameters(request, StringConst.ID);
-                    RemoveUser(parameters.get(StringConst.ID), con);
+                    crud.Remove(parameters.get(StringConst.ID), con);
                     request.setAttribute("msg", "Uspesno ste obrisali korisnika");
                     break;
                 case "Update":
                     parameters = ServletRequestHelper.getParameters(request, "id", "name", "surname", "email", "paswordHash", "salt", "ovlascenjeId");
-                    UpdateUser(parameters, con);
+                    crud.Update(parameters, con);
                     request.setAttribute("msg", "Uspesno ste izmenili korisnika");
                     break;
                 default:
@@ -117,39 +111,5 @@ public class UserCrudServlet extends HttpServlet {
             request.setAttribute("poruka", ex);
             request.getRequestDispatcher(StringConst.ERROR_PAGE).forward(request, response);
         }
-
     }
-
-    private User GetUserById(int id, Connection con) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void AddUser(HashMap<String, String> parameters, Connection con) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
-        if(parameters.containsValue("")) return;
-        
-        String query = "INSERT INTO korisnik (ime, prezime, email, passwordHash, salt, ovlascenjeId) VALUES (?,?,?,?,?,?)";
-        PreparedStatement pstm = con.prepareStatement(query);
-
-        String passwordHash = PasswordHasher.GetPasswordHash(parameters.get(StringConst.PASSWORD));
-        String salt = "";
-
-        pstm.setString(1, parameters.get(StringConst.USER_NAME));
-        pstm.setString(2, parameters.get(StringConst.USER_LAST_NAME));
-        pstm.setString(3, parameters.get(StringConst.EMAIL));
-        pstm.setString(4, passwordHash);
-        pstm.setString(5, salt);
-        pstm.setInt(6, StringConst.ROLE_ID);
-
-        pstm.executeUpdate();
-        pstm.close();
-    }
-
-    private void RemoveUser(String get, Connection con) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void UpdateUser(HashMap<String, String> parameters, Connection con) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

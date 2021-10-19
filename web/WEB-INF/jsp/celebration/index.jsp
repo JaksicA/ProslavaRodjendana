@@ -33,6 +33,8 @@
                         </div>
                         <a class="btn btn-danger" href="CelebrationCrudServlet?id=<%=celebration.getId()%>&action=Remove">Obrisi</a>
                         <a class="btn btn-primary" href="CelebrationCrudServlet?id=<%= celebration.getId()%>&action=Update">Izmeni</a>
+                        <a class="btn btn-success" href="ReservationCrudServlet?celebrationId=<%= celebration.getId()%>&action=Add">Rezervisi</a>
+
                     </div>
                     <input type="hidden" value="<%= celebration.getId()%>" />.
                     <input type="hidden" value="<%= celebration.getAgencyId()%>" />

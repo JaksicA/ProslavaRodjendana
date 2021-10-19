@@ -37,3 +37,5 @@ hs_err_pid*
 /build/web/WEB-INF/classes/utility/StringConst.class~Stashed changes
 /build/web/WEB-INF/classes/utility/StringConst.class~Stashed changes_0
 /build/web/WEB-INF/classes/utility/StringConst.class~Stashed changes_1
+/build/web/WEB-INF/classes/servlets/AgencyCrudServlet.class
+/build/web/WEB-INF/classes/utility/StringHelpers.class

@@ -44,6 +44,18 @@
         <servlet-name>UserCrudServlet</servlet-name>
         <servlet-class>servlets.UserCrudServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReservationServlet</servlet-name>
+        <servlet-class>servlets.ReservationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReservationCrudServlet</servlet-name>
+        <servlet-class>servlets.ReservationCrudServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AuthServlet</servlet-name>
+        <servlet-class>servlets.AuthServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -79,6 +91,18 @@
     <servlet-mapping>
         <servlet-name>UserCrudServlet</servlet-name>
         <url-pattern>/UserCrudServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReservationServlet</servlet-name>
+        <url-pattern>/ReservationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReservationCrudServlet</servlet-name>
+        <url-pattern>/ReservationCrudServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuthServlet</servlet-name>
+        <url-pattern>/AuthServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
