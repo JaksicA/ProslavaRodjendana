@@ -4,6 +4,8 @@
     Author     : Lenovo
 --%>
 
+<%@page import="beans.Addition"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="beans.Celebration"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,12 +15,13 @@
 
     <body>
         <jsp:include page="../navbar.jsp"/>
-        
+
         <%
             List<Celebration> celebrations = (List<Celebration>) request.getAttribute("celebrations");
-            String agencyId = (String)request.getAttribute("agencyId");
+            HashMap<Integer, List<Addition>> celebrationsAdditions = (HashMap<Integer, List<Addition>>) request.getAttribute("celebrationsAdditions");
+            String agencyId = (String) request.getAttribute("agencyId");
         %>
-        
+
         <a class="btn btn-primary" href="CelebrationCrudServlet?agencyId=<%=agencyId%>&action=Add">Dodaj proslavu</a>
         <div class="container">
             <div class="row">
@@ -34,7 +37,18 @@
                         <a class="btn btn-danger" href="CelebrationCrudServlet?id=<%=celebration.getId()%>&action=Remove">Obrisi</a>
                         <a class="btn btn-primary" href="CelebrationCrudServlet?id=<%= celebration.getId()%>&action=Update">Izmeni</a>
                         <a class="btn btn-success" href="ReservationCrudServlet?celebrationId=<%= celebration.getId()%>&action=Add">Rezervisi</a>
-
+                        <a class="btn btn-warning" href="CelebrationAdditionCrudServlet?celebrationId=<%= celebration.getId()%>">Dodaci</a>
+                        <hr/>
+                        <h5>Dodaci</h5>
+                        <ul>
+                            <%
+                                for (Addition addition : celebrationsAdditions.get(celebration.getId())) {
+                            %>
+                            <li><%=addition.getName()%></li>
+                                <%
+                                    }
+                                %>
+                        </ul>
                     </div>
                     <input type="hidden" value="<%= celebration.getId()%>" />.
                     <input type="hidden" value="<%= celebration.getAgencyId()%>" />
@@ -42,8 +56,8 @@
                 <% }%>
             </div>
         </div>
-        
-        
+
+
         <jsp:include page="../scripts.jsp"/>
     </body>
 </html>

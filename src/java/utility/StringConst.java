@@ -18,6 +18,8 @@ public class StringConst {
     public static final String DESCRIPTION = "opis";
     public static final String LOCATION = "lokacija";
     public static final String PRICE = "cena";
+    public static final String CELEBRATION_ADDITION_BASE_PATH = "WEB-INF/jsp/celebrationAddition/";
+    public static final String CELEBRATION_ADDITION_INDEX = CELEBRATION_ADDITION_BASE_PATH.concat("index.jsp");
     public static final String AGENCY_BASE_PATH = "WEB-INF/jsp/agency/";
     public static final String AUTH_BASE_PATH = "WEB-INF/jsp/auth/";
     public static final String AUTH_LOGIN_PATH ="WEB-INF/jsp/auth/login.jsp";

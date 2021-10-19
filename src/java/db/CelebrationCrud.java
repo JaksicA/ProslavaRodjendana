@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 
 /**
@@ -90,6 +91,11 @@ public class CelebrationCrud implements IBeanCrud<Celebration> {
 
         pstm.executeUpdate();
         pstm.close();
+    }
+
+    @Override
+    public List<Celebration> GetAll(Connection con) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

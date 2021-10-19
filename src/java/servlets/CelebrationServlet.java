@@ -5,7 +5,9 @@
  */
 package servlets;
 
+import beans.Addition;
 import beans.Celebration;
+import db.AdditionCrud;
 import db.ConnectionHelpers;
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,7 +15,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +30,8 @@ import utility.StringConst;
  */
 public class CelebrationServlet extends HttpServlet {
 
+    @Inject AdditionCrud additionCrud; 
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -34,7 +40,9 @@ public class CelebrationServlet extends HttpServlet {
                     ? request.getParameter("agencyId")
                     : (String) request.getAttribute("agencyId");
             List<Celebration> celebrations = GetCelebrations(con, agencyId);
-
+            HashMap<Integer, List<Addition>> celebrationsAdditions = GetCelebrationAddition(celebrations, con);
+            
+            request.setAttribute("celebrationsAdditions", celebrationsAdditions);
             request.setAttribute("agencyId", agencyId);
             request.setAttribute("celebrations", celebrations);
             request.getRequestDispatcher(StringConst.CELEBRATION_INDEX_PATH).forward(request, response);
@@ -71,6 +79,17 @@ public class CelebrationServlet extends HttpServlet {
             celebrations.add(celebration);
         }
         return celebrations;
+    }
+    
+    private HashMap<Integer, List<Addition>> GetCelebrationAddition(List<Celebration> celebrations, Connection con) throws SQLException{
+        HashMap<Integer, List<Addition>> celebrationsAdditions = new HashMap<>();
+        
+        for(Celebration celebration : celebrations){
+            List<Addition> additions = additionCrud.GetExistingAddition(celebration.getId(), con);
+            celebrationsAdditions.put(celebration.getId(), additions);
+        }
+        
+        return celebrationsAdditions;
     }
 
 }

@@ -56,6 +56,10 @@
         <servlet-name>AuthServlet</servlet-name>
         <servlet-class>servlets.AuthServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CelebrationAdditionCrudServlet</servlet-name>
+        <servlet-class>servlets.CelebrationAdditionCrudServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>AuthServlet</servlet-name>
         <url-pattern>/AuthServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CelebrationAdditionCrudServlet</servlet-name>
+        <url-pattern>/CelebrationAdditionCrudServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
