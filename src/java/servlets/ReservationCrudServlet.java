@@ -82,16 +82,11 @@ public class ReservationCrudServlet extends HttpServlet {
                     crud.Add(parameters, con);
                     request.setAttribute("msg", "Uspesno dodavanje proslave");
                     break;
-                case "Remove":
-                    parameters = ServletRequestHelper.getParameters(request, "id", "celebraionId","userId");
-                    crud.Remove(parameters.get("id"), con);  
-                    request.setAttribute("msg", "Uspesno ste obrisali rezervaciju");
+                case "Cancel":
+                    parameters = ServletRequestHelper.getParameters(request, "id", "celebrationId");
+                    crud.Cancel(Integer.parseInt(parameters.get("id")), con);  
+                    request.setAttribute("msg", "Uspesno ste otkazali rezervaciju");
                     request.setAttribute("celebrationId", parameters.get("celebrationId"));
-                    break;
-                case "Update":
-                    parameters = ServletRequestHelper.getParameters(request, "id","start","end","celebrationId","userId");
-                    crud.Update(parameters,con);
-                    request.setAttribute("msg", "Uspesno azurirana rezervacija");
                     break;
                 default:
                     break;

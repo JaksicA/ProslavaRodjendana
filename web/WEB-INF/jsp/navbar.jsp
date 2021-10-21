@@ -26,6 +26,9 @@
                 <a class="nav-link" href="AuthServlet">Login</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="AuthServlet?logout">Logout</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">Register</a>
             </li>
         </ul>
